@@ -1,8 +1,10 @@
+{{#each gifArray}}
 <div class="card border-primary mb-3" style="max-width: 20rem;">
-  <div class="card-header">Header</div>
+  <div class="card-header">{{gifName}}</div>
   <div class="card-body">
-    <h4 class="card-title">Primary card title</h4>
-    <p class="card-text">{{gifMessage}}</p>
+    {{!-- <h4 class="card-title"></h4> --}}
+    {{!-- <p class="card-text">{{gifMessage}}</p> --}}
     <img style="height: 200px; width: 100%; display: block;" src="{{gifURL}}" alt="GIF">
   </div>
 </div>
+{{/each}}

@@ -35,24 +35,25 @@ app.get("/", (req, res) => {
   });
 });
 
+var gifArray = [];
+
 // POST gif
 app.post("/", function(req, res) {
   // console.log(req.body);
   // res.status(200).send('You sent the name "' + req.body.text + '".');
-  var gifName = req.body.text;
+  var gifName = req.body.text ? req.body.text : "random";
   ServerLog(`Search: ${gifName}`);
 
   callGiphyAPI(gifName, (errorMessage, result) => {
-    ServerLog(result.data);
+    var gifURL = result.data;
 
-    var gifMessage = `This is a funny gif about "${
-      gifName ? gifName : "random stuff"
-    }".`;
+    ServerLog(gifURL);
+    gifArray.unshift({ gifName, gifURL });
 
-    res.render("gif.hbs", {
-      pageTitle: "GIFs",
-      gifMessage,
-      gifURL: result.data
+    res.render("index.hbs", {
+      pageTitle: "Home",
+      gifArray,
+      gifURL
     });
   });
 });
