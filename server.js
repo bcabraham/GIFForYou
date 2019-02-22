@@ -85,7 +85,7 @@ function callGiphyAPI(gifName, callback) {
           callback("Unable to connect to server.");
         } else {
           callback(undefined, {
-            data: body.data.images["original"].url
+            data: body.data.images["downsized_medium"].url
           });
           // console.log(JSON.stringify(error, undefined, 2));
           // console.log(JSON.stringify(response, undefined, 2));
@@ -106,7 +106,7 @@ function callGiphyAPI(gifName, callback) {
           callback("Unable to connect to server.");
         } else {
           callback(undefined, {
-            data: body.data[0].images["original"].url
+            data: body.data[0].images["downsized_medium"].url
           });
           // console.log(JSON.stringify(error, undefined, 2));
           // console.log(JSON.stringify(response, undefined, 2));
