@@ -49,6 +49,9 @@ app.post("/", function(req, res) {
 
     ServerLog(gifURL);
     gifArray.unshift({ gifName, gifURL });
+    if (gifArray.length > 10) {
+      gifArray = gifArray.slice(0, 10);
+    }
 
     res.render("index.hbs", {
       pageTitle: "GIFsForYou",
