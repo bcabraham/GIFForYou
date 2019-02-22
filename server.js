@@ -31,7 +31,7 @@ hbs.registerHelper("getCurrentYear", () => {
 // Serve landing page
 app.get("/", (req, res) => {
   res.render("index.hbs", {
-    pageTitle: "Home"
+    pageTitle: "GIFsForYou"
   });
 });
 
@@ -51,7 +51,7 @@ app.post("/", function(req, res) {
     gifArray.unshift({ gifName, gifURL });
 
     res.render("index.hbs", {
-      pageTitle: "Home",
+      pageTitle: "GIFsForYou",
       gifArray,
       gifURL
     });
@@ -70,10 +70,7 @@ const API_KEY = "53eOmYmTnZP6iTrKJmLJ9JsbOszh0I4G";
 function callGiphyAPI(gifName, callback) {
   var url = "";
 
-  if (
-    (typeof gifName === "string" || gifName instanceof String) &&
-    gifName.length === 0
-  ) {
+  if (gifName === "random") {
     url = `https://api.giphy.com/v1/gifs/random?api_key=${API_KEY}&tag=&rating=G`;
     ServerLog(`Search URL: ${url}`);
     request(
