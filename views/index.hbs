@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Web Page</title>
+  <link rel="stylesheet" href="../../styles/bootstrap.css" />
+  <link rel="stylesheet" href="../../styles/styles.css" />
+  <script src="scripts.js"></script>
+</head>
+
+<body>
+  {{> header}}
+
+  <div style="text-align:center">
+    <form class="form-group" action="/" method="POST">
+      <label class="col-form-label" for="inputDefault">Enter a word in the box below to search for a gif, or leave it
+        blank to search for a random gif</label>
+      <input type="text" class="form-control" placeholder="Enter search here" id="text" name="text" />
+      <button type="submit" class="btn btn-primary">
+        Send
+      </button>
+    </form>
+  </div>
+</body>
+{{> footer}}
+
+</html>
