@@ -37,7 +37,7 @@ app.get("/", (req, res) => {
 
 // POST gif
 app.post("/", function(req, res) {
-  console.log(req.body);
+  // console.log(req.body);
   // res.status(200).send('You sent the name "' + req.body.text + '".');
   var gifName = req.body.text;
   ServerLog(`Search: ${gifName}`);
@@ -45,16 +45,20 @@ app.post("/", function(req, res) {
   callGiphyAPI(gifName, (errorMessage, result) => {
     ServerLog(result.data);
 
+    var gifMessage = `This is a funny gif about "${
+      gifName ? gifName : "random stuff"
+    }".`;
+
     res.render("gif.hbs", {
       pageTitle: "GIFs",
-      gifName: req.body.text,
+      gifMessage,
       gifURL: result.data
     });
   });
 });
 
 app.listen(PORT, () => {
-  console.log(`Started server on port ${PORT}`); // eslint-disable-line no-console
+  ServerLog(`Started server on port ${PORT}`);
 });
 
 module.exports = { app };
@@ -63,28 +67,53 @@ module.exports = { app };
 const API_KEY = "53eOmYmTnZP6iTrKJmLJ9JsbOszh0I4G";
 
 function callGiphyAPI(gifName, callback) {
-  var encodedGifName = encodeURIComponent(gifName);
-  var url = `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${encodedGifName}&limit=1&offset=0&rating=G&lang=en`;
+  var url = "";
 
-  ServerLog(`Search URL: ${url}`);
-  request(
-    {
-      url,
-      json: true
-    },
-    (error, response, body) => {
-      if (error) {
-        callback("Unable to connect to server.");
-      } else {
-        console.log(gifName);
-        callback(undefined, {
-          data: body.data[0].images["original"].url
-        });
-        // console.log(JSON.stringify(error, undefined, 2));
-        // console.log(JSON.stringify(response, undefined, 2));
+  if (
+    (typeof gifName === "string" || gifName instanceof String) &&
+    gifName.length === 0
+  ) {
+    url = `https://api.giphy.com/v1/gifs/random?api_key=${API_KEY}&tag=&rating=G`;
+    ServerLog(`Search URL: ${url}`);
+    request(
+      {
+        url,
+        json: true
+      },
+      (error, response, body) => {
+        if (error) {
+          callback("Unable to connect to server.");
+        } else {
+          callback(undefined, {
+            data: body.data.images["original"].url
+          });
+          // console.log(JSON.stringify(error, undefined, 2));
+          // console.log(JSON.stringify(response, undefined, 2));
+        }
       }
-    }
-  );
+    );
+  } else {
+    var encodedGifName = encodeURIComponent(gifName);
+    url = `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${encodedGifName}&limit=1&offset=0&rating=G&lang=en`;
+    ServerLog(`Search URL: ${url}`);
+    request(
+      {
+        url,
+        json: true
+      },
+      (error, response, body) => {
+        if (error) {
+          callback("Unable to connect to server.");
+        } else {
+          callback(undefined, {
+            data: body.data[0].images["original"].url
+          });
+          // console.log(JSON.stringify(error, undefined, 2));
+          // console.log(JSON.stringify(response, undefined, 2));
+        }
+      }
+    );
+  }
 }
 
 function ServerLog(message) {
