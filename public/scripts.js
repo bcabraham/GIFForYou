@@ -1,23 +1,13 @@
-// const request = require("request");
-
-// function sendMeme(text) {
-//   console.log(text);
-
-//   var body = { text };
-
-//   request(
-//     {
-//       url: "http://localhost:3000/meme",
-//       method: "POST",
-//       json: true, // <--Very important!!!
-//       body
-//     },
-//     function(error, response, body) {
-//       console.log(response);
-//     }
-//   );
-// }
-
-// module.exports = {
-//   sendMeme
-// };
+function copyText() {
+  var text = document.getElementById("gifImg").src;
+  // console.log(text);
+  const el = document.createElement("textarea");
+  el.value = text;
+  el.setAttribute("readonly", "");
+  el.style.position = "absolute";
+  el.style.left = "-9999px";
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand("copy");
+  document.body.removeChild(el);
+}

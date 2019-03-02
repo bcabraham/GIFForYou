@@ -28,14 +28,15 @@ hbs.registerHelper("getCurrentYear", () => {
   return new Date().getFullYear();
 });
 
+var gifArray = [];
+
 // Serve landing page
 app.get("/", (req, res) => {
   res.render("index.hbs", {
-    pageTitle: "GIFsForYou"
+    pageTitle: "GIFsForYou",
+    gifArray
   });
 });
-
-var gifArray = [];
 
 // POST gif
 app.post("/", function(req, res) {

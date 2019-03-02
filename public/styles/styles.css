@@ -7,3 +7,8 @@ h1 {
   display: block;
   margin: auto;
 }
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+}
